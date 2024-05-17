@@ -127,9 +127,9 @@ def add_data(wallet: str, amount: float, points: int, value_in_usd: float):
     current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     sheet.cell(row=new_row, column=1).value = current_datetime
     sheet.cell(row=new_row, column=2).value = wallet
-    sheet.cell(row=new_row, column=3).value = amount
-    sheet.cell(row=new_row, column=4).value = points
-    sheet.cell(row=new_row, column=5).value = value_in_usd
+    sheet.cell(row=new_row, column=3).value = '{:.10f}'.format(amount)
+    sheet.cell(row=new_row, column=4).value = '{:.10f}'.format(points)
+    sheet.cell(row=new_row, column=5).value = '{:.10f}'.format(value_in_usd)
 
     book.save(file_name)
     book.close()
@@ -144,11 +144,16 @@ def start_check_marks(wallet):
 
     response = request(url=url, wallet=wallet, proxy=proxy)
 
+    amount = 0
+    value_in_usd = 0
+    points = 0
+
     for item in response:
-        amount = item.get("amount")
-        value_in_usd = item.get("value_in_usd")
-        points = item.get("points")
-        add_data(wallet, amount, points, value_in_usd)
+        amount = amount + item.get("amount")
+        value_in_usd = value_in_usd + item.get("value_in_usd")
+        points = points + item.get("points")
+
+    add_data(wallet, amount, points, value_in_usd)
 
 if __name__ == '__main__':
     for wallet in WALLETS:

@@ -8,7 +8,7 @@
 💰 DONATION EVM ADDRESS: 0x9410f4A06fE4f13F8b38CaC5497755275C0c5020
 ## User_data
 
-`wallets.txt` - put evm private keys 1 key = 1 line
+`addresses.txt` - put evm private keys 1 key = 1 line
 `proxies.txt` - put proxies in format http://login:pass@address:port
 
 
